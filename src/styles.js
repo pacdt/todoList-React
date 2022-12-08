@@ -8,6 +8,12 @@ export const Container = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-direction: column;
+	h1{
+		margin-bottom: 20px;
+		font-weight: 400;
+		color: #fff;
+	}
 `;
 export const ToDoList = styled.div`
 	background-color: #fff;
@@ -41,7 +47,7 @@ export const InputArea = styled.input`
 	width: 50vw;
 	padding-left: 20px;
 	background-color: transparent;
-	color: crimson;
+	color: black;
 	font-size: 18px;
 	margin-bottom: 15px;
     &::placeholder{
@@ -90,8 +96,3 @@ export const Heading3 = styled.h3`
 	text-align: center;
 	margin-top: 25px;
 `;
-export const Appl = styled.div`
-    h1{
-        text-align: center;
-    }
-`

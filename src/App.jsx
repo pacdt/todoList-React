@@ -1,17 +1,6 @@
 import { v4 as uuid } from "uuid";
 import React, { useState } from "react";
-import {
-	Container,
-	ToDoList,
-	BtnAdd,
-	InputArea,
-	List,
-	UlList,
-	Trash,
-	Rocket,
-	Heading3,
-	Appl,
-} from "./styles.js";
+import {Container, ToDoList, BtnAdd, InputArea, List, UlList, Trash, Rocket, Heading3} from "./styles.js";
 
 function App() {
 	const [list, setList] = useState([]);
@@ -19,6 +8,11 @@ function App() {
 
 	const changeInput = (event) => {
 		setInputTask(event.target.value);
+	};
+	const clearInput = () => {
+		const inp = document.getElementById("inputField");
+		inp.value = null;
+		console.log(inp.value);
 	};
 
 	const buttonClicked = () => {
@@ -28,7 +22,14 @@ function App() {
 				{ id: uuid(), task: inputTask, finished: false },
 			]);
 		}
+		clearInput();
 	};
+
+	document.addEventListener("keypress", function (e) {
+		if (e.key === "Enter") {
+			buttonClicked();
+		}
+	});
 
 	function finishTask(id) {
 		const newList = list.map((item) =>
@@ -45,40 +46,31 @@ function App() {
 	}
 
 	return (
-		<Appl>
+		<Container>
 			<h1>ToDo List</h1>
-			<Container>
-				<ToDoList>
-					<InputArea
-						onChange={changeInput}
-						placeholder="Digite sua tarefa"></InputArea>
-					<BtnAdd onClick={buttonClicked}>Adicionar</BtnAdd>
-					<ul>
-						{list.length > 0 ? (
-							list.map((item) => (
-								<UlList
-									isFinished={item.finished}
-									key={item.id}>
-									<Rocket
-										onClick={() => finishTask(item.id)}
-									/>
-									<List> {item.task} </List>
-									<Trash
-										onClick={() => deleteTask(item.id)}
-									/>
-								</UlList>
-							))
-						) : (
-							<Heading3>Não há Itens na Lista!</Heading3>
-						)}
-					</ul>
-				</ToDoList>
-			</Container>
-		</Appl>
+			<ToDoList>
+				<InputArea
+					id="inputField"
+					onChange={changeInput}
+					placeholder="Digite sua tarefa"></InputArea>
+				<BtnAdd onClick={buttonClicked} id="submit">
+					Adicionar
+				</BtnAdd>
+				<ul>
+					{list.length > 0 ? (
+						list.map((item) => (
+							<UlList isFinished={item.finished} key={item.id}>
+								<Rocket onClick={() => finishTask(item.id)} />
+								<List> {item.task} </List>
+								<Trash onClick={() => deleteTask(item.id)} />
+							</UlList>
+						))
+					) : (
+						<Heading3>Não há Itens na Lista!</Heading3>
+					)}
+				</ul>
+			</ToDoList>
+		</Container>
 	);
-}
-
-function Title() {
-	return <h1>ToDo List</h1>;
 }
 export default App;
